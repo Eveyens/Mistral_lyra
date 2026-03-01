@@ -20,8 +20,8 @@ export function LandingHero() {
         </Badge>
 
         <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight text-foreground md:text-6xl md:leading-tight">
-          Jamais seul <br />
-          <span className="text-primary">entre deux séances.</span>
+          Devenez l'acteur <br />
+          <span className="text-primary">de votre bien-être.</span>
         </h1>
 
         <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground md:text-xl">

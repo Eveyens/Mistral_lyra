@@ -3,7 +3,7 @@
 # 🌸 Lyra
 ### *Compagnon de santé mentale pour adolescents, propulsé par Mistral AI*
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 [![Mistral AI](https://img.shields.io/badge/Mistral_AI-Powered-FF7000?logo=data:image/svg+xml;base64,PHN2Zy8+)](https://mistral.ai/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
@@ -13,6 +13,14 @@
 *Lyra est une application web de soutien psychologique destinée aux adolescents en suivi psychiatrique. Elle offre un accompagnement quotidien entre les séances, grâce à une IA empathique, des outils de bien-être, et un espace de partage sécurisé avec les proches et le médecin.*
 
 </div>
+
+---
+
+## 📑 Sommaire
+
+- [Le Problème](#-le-problème) · [Solution](#-solution) · [Modèles Mistral](#-modèles-mistral-utilisés) · [Fonctionnalités](#-fonctionnalités-clés)
+- [Architecture](#️-architecture-technique) · [Installation](#-installation--lancement) · [Comptes démo](#-comptes-de-démonstration)
+- [Stack](#-stack-technique) · [Confidentialité](#-confidentialité--sécurité) · [Dépannage](#-dépannage)
 
 ---
 
@@ -152,13 +160,28 @@ Lyra/
 │   │   ├── chat/          → Route chat Lyra (Mistral Large)
 │   │   ├── agents/chat/   → Route agents IA (Mistral Small)
 │   │   ├── transcribe/    → Voxtral speech-to-text
-│   │   ├── analyze-image/ → Pixtral vision
-│   │   └── generate-image/→ Génération d'image journal
+│   │   ├── analyze-image/ → Pixtral vision (analyse de dessins)
+│   │   └── generate-image/→ Génération d'image journal (Pixtral)
 │   ├── patient/           → Espace adolescent
+│   │   ├── chat/          → Chat avec Lyra
+│   │   ├── journal/       → Journal intime
+│   │   ├── gps/           → GPS Émotionnel
+│   │   ├── safety/        → Kit de Secours
+│   │   ├── proches/       → Mots de mes proches
+│   │   ├── resources/     → Boîte à outils bien-être
+│   │   ├── agents/[id]/   → Mini-agents IA
+│   │   ├── calendar/      → Calendrier & habitudes
+│   │   ├── goals/         → Résolutions
+│   │   └── settings/      → Paramètres
 │   ├── parent/            → Espace parent
+│   │   ├── private/       → Infos privées (GPS émotionnel)
+│   │   ├── support/       → Soutenir (mots des proches)
+│   │   └── resources/     → Ressources
 │   └── medecin/           → Espace médecin
+│       ├── patient/[id]/  → Dossier patient
+│       └── patient-detail/→ Détail & rapports
 ├── components/
-│   ├── app/               → Composants métier
+│   ├── app/               → Composants métier (dashboard, mood-checkin...)
 │   ├── voice-button.tsx   → Bouton dictée vocale réutilisable
 │   └── ui/                → Design system (shadcn/ui)
 └── lib/
@@ -178,16 +201,16 @@ Lyra/
 ### Installation
 
 ```bash
-# Cloner le dépôt
+# Cloner le dépôt (ou naviguer vers le dossier Lyra si déjà cloné)
 git clone https://github.com/Eveyens/Mistral_lyra.git
-cd Mistral_lyra/Lyra
+cd Mistral_lyra/Lyra   # ou cd Lyra selon la structure du repo
 
 # Installer les dépendances
 npm install
 
 # Configurer les variables d'environnement
 cp .env.example .env
-# → Ajouter votre MISTRAL_API_KEY dans .env
+# → Éditer .env et ajouter votre MISTRAL_API_KEY
 ```
 
 ### Variables d'environnement
@@ -204,6 +227,15 @@ npm run dev
 ```
 
 Ouvrir [http://localhost:3000](http://localhost:3000)
+
+### Scripts disponibles
+
+| Commande | Description |
+|----------|-------------|
+| `npm run dev` | Lance le serveur de développement (port 3000) |
+| `npm run build` | Compile l'application pour la production |
+| `npm run start` | Lance l'application en mode production |
+| `npm run lint` | Vérifie le code avec ESLint |
 
 ---
 
@@ -233,6 +265,26 @@ L'application utilise des données de démonstration pré-remplies. Aucune authe
 | **sonner** | Notifications toast |
 | **date-fns** | Manipulation des dates |
 | **lucide-react** | Icônes |
+| **framer-motion** | Animations |
+| **recharts** | Graphiques (tableau de bord) |
+
+---
+
+## 🔒 Confidentialité & Sécurité
+
+Lyra est conçu pour un usage sensible (santé mentale). Les principes suivants sont respectés :
+
+- **Données de démo** : Aucune donnée réelle n'est stockée en production actuellement
+- **Journal intime** : Jamais partagé avec le parent sans consentement explicite de l'adolescent
+- **GPS émotionnel** : Partage au parent uniquement si l'adolescent l'autorise dans les paramètres
+- **Détection de crise** : Les réponses contenant `[CRISIS]` déclenchent immédiatement l'affichage des numéros d'urgence (3114, 15)
+- **Clé API** : À conserver uniquement côté serveur (variables d'environnement), jamais exposée au client
+
+---
+
+## 🖼️ Aperçu (screenshots)
+
+> *Des captures d'écran de l'interface pourront être ajoutées ici.*
 
 ---
 
@@ -289,6 +341,17 @@ const NAV_SECTIONS = [
 
 ---
 
+## 🔧 Dépannage
+
+| Problème | Solution |
+|----------|----------|
+| **Erreur 401 / API** | Vérifier que `MISTRAL_API_KEY` est bien définie dans `.env` et que la clé est valide sur [console.mistral.ai](https://console.mistral.ai/) |
+| **Dictée vocale ne fonctionne pas** | S'assurer d'utiliser HTTPS ou localhost (les APIs microphone requièrent un contexte sécurisé) |
+| **Erreur de build** | Exécuter `npm install` puis `npm run build` — vérifier Node.js ≥ 18 |
+| **Images non générées** | Vérifier les quotas et la clé API Mistral pour Pixtral |
+
+---
+
 ## 🏆 Hackathon Mistral AI — Mars 2026
 
 Ce projet a été développé dans le cadre du **Hackathon Mistral AI**. L'objectif était de créer une application innovante utilisant les modèles Mistral de manière pertinente et utile.
@@ -298,6 +361,18 @@ Ce projet a été développé dans le cadre du **Hackathon Mistral AI**. L'objec
 - `mistral-small-latest` → Mini-agents thématiques
 - `voxtral-mini-latest` → Dictée vocale (speech-to-text)
 - `pixtral-12b-2409` → Vision (analyse de dessins & génération d'images)
+
+---
+
+## 🤝 Contribuer
+
+Les contributions sont les bienvenues ! Pour toute modification :
+
+1. Forker le dépôt
+2. Créer une branche (`git checkout -b feature/ma-fonctionnalite`)
+3. Committer les changements (`git commit -m 'Ajout de ma fonctionnalité'`)
+4. Pousser la branche (`git push origin feature/ma-fonctionnalite`)
+5. Ouvrir une Pull Request
 
 ---
 

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Send, ArrowLeft, Bot, TreePine, PenTool, Sparkles, Heart } from "lucide-react"
 import { VoiceButton } from "@/components/voice-button"
+import ReactMarkdown from "react-markdown"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { useParams, useSearchParams, useRouter } from "next/navigation"
@@ -155,14 +156,41 @@ export default function AgentChatPage() {
                                         : "bg-white border border-border/50 text-foreground rounded-bl-sm"
                                 )}
                             >
-                                <p className="whitespace-pre-wrap">
-                                    {(msg as any).parts
-                                        ? (msg as any).parts
-                                            .filter((p: any) => p.type === 'text')
-                                            .map((p: any) => p.text)
-                                            .join('')
-                                        : msg.content}
-                                </p>
+                                {msg.role === "assistant" ? (() => {
+                                    const text = (msg as any).parts
+                                        ? (msg as any).parts.filter((p: any) => p.type === 'text').map((p: any) => p.text).join('')
+                                        : msg.content || ''
+                                    return (
+                                        <div className="prose prose-sm max-w-none
+                                            prose-p:my-1 prose-p:leading-relaxed
+                                            prose-ul:my-1 prose-ol:my-1
+                                            prose-li:my-0.5
+                                            prose-strong:font-semibold
+                                            prose-a:text-primary prose-a:underline prose-a:underline-offset-2
+                                            prose-headings:text-foreground prose-headings:font-semibold
+                                        ">
+                                            <ReactMarkdown
+                                                components={{
+                                                    a: ({ href, children }) => (
+                                                        <a href={href} target="_blank" rel="noopener noreferrer"
+                                                            className="text-primary underline underline-offset-2 hover:opacity-80"
+                                                        >
+                                                            {children}
+                                                        </a>
+                                                    )
+                                                }}
+                                            >
+                                                {text}
+                                            </ReactMarkdown>
+                                        </div>
+                                    )
+                                })() : (
+                                    <p className="whitespace-pre-wrap">
+                                        {(msg as any).parts
+                                            ? (msg as any).parts.filter((p: any) => p.type === 'text').map((p: any) => p.text).join('')
+                                            : msg.content}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     ))}

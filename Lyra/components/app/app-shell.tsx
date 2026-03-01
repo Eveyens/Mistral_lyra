@@ -41,10 +41,10 @@ const patientNav = [
   { href: "/patient/calendar", label: "Calendrier", icon: Calendar },
   { href: "/patient/journal", label: "Journal", icon: BookOpen },
   { href: "/patient/proches", label: "Mots de mes proches", icon: MessageCircleHeart },
-  { href: "/patient/gps", label: "Mon GPS", icon: Compass },
-  { href: "/patient/safety", label: "Kit de secours", icon: ShieldAlert },
-  { href: "/patient/goals", label: "Resolutions", icon: Target },
   { href: "/patient/resources", label: "Détente", icon: BookMarked },
+  { href: "/patient/goals", label: "Resolutions", icon: Target },
+  { href: "/patient/safety", label: "Kit de secours", icon: ShieldAlert },
+  { href: "/patient/gps", label: "Mon GPS", icon: Compass },
   { href: "/patient/settings", label: "Parametres", icon: Settings },
 ]
 
