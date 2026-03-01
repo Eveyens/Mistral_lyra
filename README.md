@@ -44,7 +44,6 @@ Lyra est un **compagnon de santé mentale** organisé en trois espaces distincts
 | **Mini-Agents IA** | `mistral-small-latest` | Agents spécialisés (jardinier, poète, robot...) |
 | **Dictée vocale** | `voxtral-mini-latest` | Transcription audio → texte (speech-to-text) |
 | **Analyse de dessin** | `pixtral-12b-2409` | Vision : analyse émotionnelle d'images/dessins |
-| **Génération d'image journal** | `pixtral-12b-2409` | Génération d'illustration pour le journal |
 
 ---
 
